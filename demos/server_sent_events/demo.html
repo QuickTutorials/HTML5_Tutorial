@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <!--
+        Curso HTML5 | Enero 2013
+        manuel.depaz@bbvaglobalnet.com
+    
+        Demo del API XXXX de HTML5
+    
+        Fuentes originales:        
+    -->
+
+    <head>
+        <meta charset="utf-8" />
+        <title>HTML5 Demo Courses</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <!-- Le styles -->
+        <link href="../../assets/css/bootstrap.css" rel="stylesheet" />
+        <link href="../../assets/css/bootstrap-marketing-demo.css" rel="stylesheet" />
+        <link href="../../assets/css/bootstrap-responsive.css" rel="stylesheet" />
+        <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <!-- Fav and touch icons -->
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../assets/ico/apple-touch-icon-144-precomposed.png" />
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../assets/ico/apple-touch-icon-114-precomposed.png" />
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../assets/ico/apple-touch-icon-72-precomposed.png" />
+        <link rel="apple-touch-icon-precomposed" href="../../assets/ico/apple-touch-icon-57-precomposed.png" />
+        <link rel="shortcut icon" href="../../assets/ico/favicon.png" />
+    </head>
+    <body>
+        <!-- Top menu -------------------------------------------------------- -->
+        <div class="container-narrow">
+            <div class="masthead">
+                <ul class="nav nav-pills pull-right">
+                    <li><a href="../../index.html">Home</a></li>
+                </ul>
+                <h3 class="muted">Server Sent Events</h3>
+            </div>
+
+            <hr />
+            <!-- Center Logo ----------------------------------------------------- -->
+            <div class="row-fluid">
+                <div class="span12" id="status">Connecting...</div>
+                <div class="media-object">
+                    Datos recibidos:
+                    <textarea style="width: 100%; height: 7em;" id="datosrecibidos"></textarea>
+                </div>
+            </div>
+
+            <hr />
+            <!-- Footer ---------------------------------------------------------- -->
+            <div class="footer">
+                <p align="center"><img src="../../assets/img/beeva_logo.png" /></p>
+            </div>
+        </div>
+        <!-- /container -->
+        <!-- Le javascript
+                ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster 			-->
+        <script type="text/javascript">
+            if(typeof(EventSource)!=="undefined") {
+                
+                var fuente = new EventSource("server_sse.php");
+                //var fuente = new EventSource("http://cursohtml5.gobernalianet.es/demos/server_sent_events/server_sse.php");
+                
+                fuente.onmessage = function(event) {
+                    document.getElementById("datosrecibidos").innerHTML = event.data;
+                };
+                
+                fuente.onopen = function(event) {
+                    document.getElementById("status").innerHTML = "Connected!";
+                };
+                
+                fuente.onclose = function(event) {
+                    document.getElementById("status").innerHTML = "Disconnected";
+                };
+                
+                //readyState — as with XHR, we have a readyState for the EventSource that tells us if we’re connecting (0), open (1), or closed (2).
+                
+            } else {
+                document.getElementById("datosrecibidos").innerHTML = "¡Glups! Tu navegador no soporta eventos server-sent.";
+            }
+        </script>
+
+    </body>
+</html>

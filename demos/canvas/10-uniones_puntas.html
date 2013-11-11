@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+    <!--
+        Curso HTML5 | Enero 2013
+        joseangel.gomez@bbvaglobalnet.com
+    
+        Demo de Canvas de HTML5
+        
+    -->
+    
+    <head>
+        <meta charset="utf-8" />
+        <title>HTML5 Demo Courses</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <!-- Le styles -->
+        <link href="../../assets/css/bootstrap.css" rel="stylesheet" />
+        <link href="../../assets/css/bootstrap-marketing-demo.css" rel="stylesheet" />
+        <link href="../../assets/css/bootstrap-responsive.css" rel="stylesheet" />
+        <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <!-- Fav and touch icons -->
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../assets/ico/apple-touch-icon-144-precomposed.png" />
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../assets/ico/apple-touch-icon-114-precomposed.png" />
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../assets/ico/apple-touch-icon-72-precomposed.png" />
+        <link rel="apple-touch-icon-precomposed" href="../../assets/ico/apple-touch-icon-57-precomposed.png" />
+        <link rel="shortcut icon" href="../../assets/ico/favicon.png" />
+        
+        
+        
+        <script>
+        //Recibe un identificador del elemento canvas y carga el canvas
+        //Devueve el contexto del canvas o FALSE si no ha podido conseguise
+        function cargaContextoCanvas(idCanvas){
+           var elemento = document.getElementById(idCanvas);
+           if(elemento && elemento.getContext){
+              var contexto = elemento.getContext('2d');
+              if(contexto){
+                 return contexto;
+              }
+           }
+           return FALSE;
+        }
+
+         window.onload = function(){
+            
+            //Descripcion diferentes tipos de uniones entre lineas en distintos colores
+            var ctx = cargaContextoCanvas('micanvas1');
+            if(ctx){
+               //defino un array con los distintos valores de lineJoin
+               var valores_lineJoin = ["miter", "round", "bevel"];
+               //defino un array con colores
+               var colores = ["#900", "#090", "#009"]
+               //configuro el grosor de línea
+               ctx.lineWidth = 20;
+               //bucle para hacer tres rectángulos con distintas configuraciones
+               for (i=0; i<3; i++){
+                  //cargo la configuración de lineJoin
+                  ctx.lineJoin = valores_lineJoin[i];
+                  //cargo la configuración de color
+                  ctx.strokeStyle = colores[i];
+                  //dibujo un rectángulo
+                  ctx.strokeRect((i * 160) + 20, 20, 120, 80);
+               }
+            }
+            
+            //Ejemplo de extremo de una punta
+            actualizarValorReiniciar();
+            dibujaCaminoCambiaAngulo();
+         }
+
+        var altura_para_vertices = 1;
+        var valor_miteLimit = 10;
+
+        function actualizarValorReiniciar(){
+           altura_para_vertices = 1;
+           valor_miteLimit = parseInt(document.formulario.valormiterlimit.value);
+        }
+
+        function dibujaCaminoCambiaAngulo(){
+           var ctx = cargaContextoCanvas('micanvas2');
+           if(ctx){
+              //cambio el valor de miterLimit
+              ctx.miterLimit = valor_miteLimit;
+              //limpio el canvas
+              ctx.clearRect(0,0,ctx.canvas.width,ctx.canvas.height);
+              //cambio color
+              ctx.strokeStyle = "#00c";
+              //defino la unión miter
+              ctx.lineJoin = "miter";
+              //anchura de la linea
+              ctx.lineWidth = 10;
+              //Dibujo dos líneas en angulo que va cambiando...
+              ctx.beginPath();
+              ctx.moveTo(20,380);
+              ctx.lineTo(40,380-altura_para_vertices);
+              ctx.lineTo(60,380);
+              ctx.stroke();
+              //pinto el punto donde estoy haciendo el angulo
+              ctx.fillStyle = "#0f0";
+              ctx.fillRect(39, 379-altura_para_vertices, 2, 2)
+              //actualizo la altura del vértice y llamo a la función con un retardo
+              altura_para_vertices += 2;
+              setTimeout("dibujaCaminoCambiaAngulo()",100);
+           }
+        }
+
+        </script>       
+        
+        
+        
+    </head>
+    <body>
+        <!-- Top menu -------------------------------------------------------- -->
+        <div class="container-narrow">
+            <div class="masthead">
+                <ul class="nav nav-pills pull-right">
+                    <li><a href="demo.html">Canvas</a></li>
+                    <li><a href="../../index.html">Home</a></li>
+                </ul>
+                <h3 class="muted">Canvas - Uniones y Extremos de Puntas</h3>
+            </div>
+
+            <hr />
+            <!-- Center Logo ----------------------------------------------------- -->
+            <div class="row-fluid">
+                <canvas id="micanvas1" width="500" height="200">
+                    Contenido que sólo verán los usuarios que no soportan canvas en su navegador. Usa una versión moderna de Firefox, Chrome, Safari, Opera... casi todos los navegadores excepto Explorer son compatibles con Canvas.
+                </canvas>
+                <canvas id="micanvas2" style="float:left;margin-top:300px;" width="100" height="400">
+                    Contenido que sólo verán los usuarios que no soportan canvas en su navegador. Usa una versión moderna de Firefox, Chrome, Safari, Opera... casi todos los navegadores excepto Explorer son compatibles con Canvas.
+                </canvas>
+                <div style="margin-top:300px;">
+                    <form name="formulario">
+                       Valor de miterLimit: <input type="text" size=3 value="10" name="valormiterlimit"> * recomiendo poner valor entre 1 y 15
+                       <br>
+                       <button type="button" onclick="actualizarValorReiniciar()">Actualizar valor y reiniciar</button>
+                    </form>
+                </div>
+            </div>
+
+            <hr />
+            <!-- Footer ---------------------------------------------------------- -->
+            <div class="footer">
+                <p align="center"><img src="../../assets/img/beeva_logo.png" /></p>
+            </div>
+        </div>
+        <!-- /container -->
+        <!-- Le javascript
+                ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster 			-->
+        <script></script>
+
+    </body>
+</html>

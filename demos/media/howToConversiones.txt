@@ -1,0 +1,11 @@
+
+# Programs & libs needed
+sudo apt-get install ffmpeg mpg123 mpg321 vorbis-tools
+
+# Audio Converts
+mpg321 input.mp3 -w raw && oggenc raw -o output.ogg
+rm raw # Delete temp files
+
+# Video Converts
+ffmpeg -i input.mp4 output.webm
+ffmpeg -i input.mp4 output.ogv

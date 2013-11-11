@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+    <!--
+        Curso HTML5 | Enero 2013
+        roberto.santiago@bbvaglobalnet.com
+    
+        Demo de los formularios HTML5  
+    -->
+    
+    <head>
+        <meta charset="utf-8" />
+        <title>HTML5 Demo - Formularios</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <!-- Le styles -->
+        <link href="../../assets/css/bootstrap.css" rel="stylesheet" />
+        <link href="../../assets/css/bootstrap-marketing-demo.css" rel="stylesheet" />
+        <link href="../../assets/css/bootstrap-responsive.css" rel="stylesheet" />
+
+        <link href="css/demo.css" rel="stylesheet" />
+        <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <!-- Fav and touch icons -->
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../assets/ico/apple-touch-icon-144-precomposed.png" />
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../assets/ico/apple-touch-icon-114-precomposed.png" />
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../assets/ico/apple-touch-icon-72-precomposed.png" />
+        <link rel="apple-touch-icon-precomposed" href="../../assets/ico/apple-touch-icon-57-precomposed.png" />
+        <link rel="shortcut icon" href="../../assets/ico/favicon.png" />
+    </head>
+    <body>
+        <!-- Top menu -------------------------------------------------------- -->
+        <div class="container-narrow">
+            <div class="masthead">
+                <ul class="nav nav-pills pull-right">
+                    <li><a href="../../index.html">Home</a></li>
+                </ul>
+                <h3 class="muted">Formularios</h3>
+            </div>
+
+            <hr />
+            <!-- Center Logo ----------------------------------------------------- -->
+            <div class="row-fluid">
+                <form oninput="salida.value=parseInt(points.value)">
+                <p><span>Color: </span><input type="color" name="favcolor"></p>
+                <p><span>Fecha: </span><input type="date" name="bday"></p>
+                <p><span>E-mail: </span><input type="email" name="usremail" ></p>
+                <p><span>Número: </span><input type="number" name="quantity" min="1" max="5"></p>
+                <p><span>Rango: </span>0<input type="range" name="points" min="0" max="100" step="5">100</p>
+                <p><span>Output: </span><output name="salida" for="points"></output>
+                <p><span>Hora:</span><input name="form_time" id="form_time" type="time" /></p>
+                <p><span>URL:</span><input name="form_url" id="form_url" type="url" list="url_list" placeholder="Introduzca una URL" /></p>
+                <datalist id="url_list">
+                    <option value="http://www.google.com" label="Google" />
+                    <option value="http://net.tutsplus.com" label="NetTuts+" />
+                </datalist>
+                <!--</datalist>-->
+                <p><span>Teléfono:</span><input name="form_telephone" id="form_telephone" type="tel" autofocus="autofocus"/></p>
+                <p>
+                    <label>
+                    Archivo: 
+                    </label>
+                    <input type="file" multiple name="att" />
+                </p>
+                <p style="padding-top: 30px"><input type="submit" value="Enviar" /></p>
+              </form>
+              <p class="aviso">
+                  Para más información sobre la compatibilidad de las nuevas etiquetas y tipos visitar <a href="http://html5test.com/" target="_blank">html5test</a>
+              </p>
+            </div>
+
+            <hr />
+            <!-- Footer ---------------------------------------------------------- -->
+            <div class="footer">
+                <p align="center"><img src="../../assets/img/beeva_logo.png" /></p>
+            </div>
+        </div>
+
+    </body>
+</html>

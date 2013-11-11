@@ -1,0 +1,32 @@
+input[type="button"] {
+	border: 2px solid #C0C0C0;
+	background-color: #000000;
+	color: #FFFFFF;
+	font-weight: bold;
+	font-size: 12px;
+	padding: 3px 7px;
+	cursor: pointer;
+}
+
+input[type="text"] {
+	border: 2px solid #C0C0C0;
+	padding: 4px;
+	font-weight: bold;
+}
+
+.informacion {	
+	font-weight: bold;
+	font-size: 14px;
+	color: #FF0000;
+	border-bottom: 2px solid #FF0000;
+	padding-bottom: 5px;
+}
+
+th {
+	text-align: left;
+	padding-right: 140px;
+}
+
+table {
+	margin-top: 20px;
+}

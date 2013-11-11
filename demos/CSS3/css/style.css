@@ -1,0 +1,233 @@
+
+body {
+	background-color:#ffffff;
+	color:#CCCCCC;
+}
+
+@font-face{
+	font-family: GeosansLight;
+	src: url('../fonts/GeosansLight.ttf'), url('../fonts/GeosansLight.eot'); /* IE9+ */
+
+}
+
+@font-face{
+	font-family: brainFlower;
+	src: url('../fonts/brain-flower.ttf');
+
+}
+
+#wrapper {
+	margin: 0 auto;
+	display:block;
+	width: 960px;
+	
+}
+
+header {
+	font-family: brainFlower;
+	margin-top: 50px;
+	margin-bottom: 50px;
+}
+
+/*Suporte de los navegadores con la propriedad TRANSFORM*/
+header .logo {
+	display:block;
+	width:80px;
+	height:40px;
+	background-color:#666666;
+	border: #999999 5px solid;
+	font-size: 200%;
+			
+	transform: rotate(-30deg);
+	-ms-transform: rotate(-30deg); /* IE 9 */
+	-webkit-transform: rotate(-30deg); /* Safari and Chrome */
+	-o-transform: rotate(-30deg); /* Opera */
+	-moz-transform: rotate(-30deg); /* Firefox */
+	
+	float: left;
+}
+
+header h1 {
+	font-size: 80px;
+	padding-left: 110px;
+	color:#999999;
+}
+
+section {
+	font-family: GeosansLight;
+	display: block;
+	width: 960px;
+	height: 600px;
+	
+}
+
+section h1 {
+	font-size: 24px;
+	padding: 20px 5px 40px 0px;
+}
+
+section ul {
+
+}
+
+/*Selectores Jerárquicos*/
+section ul li {
+	display: block;
+	width: 190px;
+	height: 110px;
+	list-style: none;
+	float: left;
+	cursor: pointer;
+	text-align: center;
+	line-height: 110px;
+	margin: 1px;
+	font-size: 70%;
+	
+	/*Opacity*/
+	opacity:0.6;
+  	/* For IE8 and earlier */
+  	filter:alpha(opacity=60);
+	
+	/*Transitions*/
+	transition:font-size 1s;
+	-moz-transition:font-size 1s; /* Firefox 4 */
+	-webkit-transition:font-size 1s; /* Safari and Chrome */
+	-o-transition:font-size 1s; /* Opera */
+}
+
+section ul li:hover {
+	display: block;
+	width: 190px;
+	height: 110px;
+	list-style: none;
+	float: left;
+	cursor: pointer;
+	text-align: center;
+	line-height: 110px;
+	margin: 1px;
+	font-size: 100%;
+	
+	/*Opacity*/
+	opacity:1.0;
+  	/* For IE8 and earlier */
+  	filter:alpha(opacity=100);
+}
+
+
+/*Selectores - Pseudoclasses de selección*/
+section li:nth-child(EVEN) {
+	background-color:#006600;
+}
+
+section li:nth-child(ODD) {
+	background-color:#CC6600;
+}
+
+/*Selectores de Atributos*/
+section ul [title=film] {
+	color: white;
+	text-decoration: none;
+}
+
+section ul [title=book] {
+	text-decoration: none;
+	color: white;
+	font-style:italic;
+}
+
+footer {
+	font-family: GeosansLight;
+	border-top: 1px dotted #333333;
+	display: block;
+	width: 960px;
+	height: 100px;
+	padding: 10px 0 0 0;
+}
+
+footer address {
+	text-align: left;
+	float:left;
+	width: 50%;
+	color: #999999;
+}
+
+footer p {
+	float: left;
+	color:#999999;
+}
+
+
+/*balls animations*/
+.balls {
+	border:none;
+	margin:0 auto;
+	position:absolute;
+	z-index: -1;
+}
+
+.ball1 {
+	left:60%;
+	top:-50px;
+	width:1000px;
+	height:1000px;
+	background-color:#CCCCCC;
+	border-radius:500px;
+	opacity:1;
+}
+
+.ball2 {
+	left:60%;
+	top:50%;
+	width:30px;
+	height:30px;
+	border-radius:15px;
+	background-color:#666666;
+	opacity:0;	
+	
+	/*animation*/
+	animation:orbitAnim 25s infinite;
+	-moz-animation:orbitAnim 25s infinite; /* Firefox */
+	-webkit-animation:orbitAnim 25s infinite; /* Safari and Chrome */
+	-o-animation:orbitAnim 25s infinite; /* Opera */
+}
+
+
+
+/*keyframes property for animation*/
+@keyframes orbitAnim
+{
+0%   {opacity: 0;}
+25%  {opacity: 0.6; width:100px; height:100px; border-radius:50px; top:70%; left: 40%;}
+50%  {opacity: 1; width:150px; height:150px; border-radius:75px;}
+75%	 {opacity: 0.6;} 	
+100% {opacity: 0; width:200px; height:200px; border-radius:100px; top:30%; left: 100%;}
+}
+
+@-moz-keyframes orbitAnim /* Firefox */
+{
+0%   {opacity: 0;}
+25%  {opacity: 0.6; width:100px; height:100px; border-radius:50px; top:70%; left: 40%;}
+50%  {opacity: 1; width:150px; height:150px; border-radius:75px;}
+75%	 {opacity: 0.6;} 	
+100% {opacity: 0; width:200px; height:200px; border-radius:100px; top:30%; left: 100%;}
+}
+
+@-webkit-keyframes orbitAnim /* Safari and Chrome */
+{
+0%   {}
+25%  {opacity: 0.6; width:100px; height:100px; border-radius:50px; top:70%; left: 40%;}
+50%  {opacity: 1; width:150px; height:150px; border-radius:75px;}
+75%	 {opacity: 0.6;} 	
+100% {opacity: 0; width:200px; height:200px; border-radius:100px; top:30%; left: 100%;}
+}
+
+@-o-keyframes orbitAnim /* Opera */
+{
+0%   {opacity: 0;}
+25%  {opacity: 0.6; width:100px; height:100px; border-radius:50px; top:70%; left: 40%;}
+50%  {opacity: 1; width:150px; height:150px; border-radius:75px;}
+75%	 {opacity: 0.6;} 	
+100% {opacity: 0; width:200px; height:200px; border-radius:100px; top:30%; left: 100%;}
+}
+
+

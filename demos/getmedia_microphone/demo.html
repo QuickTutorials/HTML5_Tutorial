@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <!--
+        Curso HTML5 | Enero 2013
+        manuel.depaz@bbvaglobalnet.com
+    
+        Demo del API getUserMedia de HTML5: Acceso a la cámara web
+    
+        Fuentes originales:
+    
+        Ejemplo 1: http://jsfiddle.net/DerekL/JV996/ (audio y video pero no salva)
+        Ejemplo 2: 
+        Ejemplo 3: http://codeartists.com/post/36746402258/how-to-record-audio-in-chrome-with-native-html5-apis
+    
+        media.navigator.enabled -> ABOUT CONFIG
+        MediaStream
+        Instalar el Chrome para desarrolladores
+        http://www.chromium.org/getting-involved/dev-channel
+
+        Mostacho
+        http://people.opera.com/brucel/articles/magic-html5-moustache.html
+    
+        Cara:
+        https://github.com/neave/face-detection
+
+        Sable láser
+        https://github.com/jeromeetienne/augmentedgesture.js/        
+
+        Reconocimiento facial
+        http://people.opera.com/richt/release/demos/device/facerecognition/index.html
+    
+
+        
+    -->
+
+    <head>
+        <meta charset="utf-8" />
+        <title>HTML5 Demo Courses</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <!-- Le styles -->
+        <link href="../../assets/css/bootstrap.css" rel="stylesheet" />
+        <link href="../../assets/css/bootstrap-marketing-demo.css" rel="stylesheet" />
+        <link href="../../assets/css/bootstrap-responsive.css" rel="stylesheet" />
+        <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <!--<script src="../../assets/js/jquery.js"></script>-->
+
+        <!-- Fav and touch icons -->
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../assets/ico/apple-touch-icon-144-precomposed.png" />
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../assets/ico/apple-touch-icon-114-precomposed.png" />
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../assets/ico/apple-touch-icon-72-precomposed.png" />
+        <link rel="apple-touch-icon-precomposed" href="../../assets/ico/apple-touch-icon-57-precomposed.png" />
+        <link rel="shortcut icon" href="../../assets/ico/favicon.png" />
+    </head>
+    <body>
+        <!-- Top menu -------------------------------------------------------- -->
+        <div class="container-narrow">
+            <div class="masthead">
+                <ul class="nav nav-pills pull-right">
+                    <li><a href="../../index.html">Home</a></li>
+                </ul>
+                <h3 class="muted">GetMedia</h3>
+            </div>
+
+            <hr />
+            <!-- Center Logo ----------------------------------------------------- -->
+            <div class="row-fluid">
+                <h1>Recorder.js simple WAV export example</h1>
+
+                <p>Make sure you are using a recent version of Google Chrome, at the moment this only works with Google Chrome Canary.</p>
+                <p>Also before you enable microphone input either plug in headphones or turn the volume down if you want to avoid ear splitting feedback!</p>
+
+                <button class="btn" onclick="startRecording(this);">record</button>
+                <button class="btn" onclick="stopRecording(this);" disabled>stop</button>
+            </div>
+
+
+            <div class="row-fluid">
+                <h2>Recordings</h2>
+                <ul id="recordingslist"></ul>
+            </div>
+
+            <div class="row-fluid">
+                <h2>Log</h2>
+                <pre id="log"></pre>
+            </div>
+
+            <hr />
+            <!-- Footer ---------------------------------------------------------- -->
+            <div class="footer">
+                <p align="center"><img src="../../assets/img/beeva_logo.png" /></p>
+            </div>
+        </div>
+        <!-- /container -->
+        <!-- Le javascript
+                ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster 			-->
+
+        <!--
+        <form enctype="multipart/form-data">
+        <input name="file" type="file" />
+        <input type="button" value="Upload" />
+        </form>
+        -->
+        <script src="js/recorder.js"></script>
+        <script>
+            function __log(e, data) {
+                log.innerHTML += "\n" + e + " " + (data || '');
+            }
+
+            var audio_context;
+            var recorder;
+
+            function startUserMedia(stream) {
+                var input = audio_context.createMediaStreamSource(stream);
+                __log('Media stream created.');
+    
+                input.connect(audio_context.destination);
+                __log('Input connected to audio context destination.');
+    
+                recorder = new Recorder(input);
+                __log('Recorder initialised.');
+            }
+
+            function startRecording(button) {
+                recorder && recorder.record();
+                button.disabled = true;
+                button.nextElementSibling.disabled = false;
+                __log('Recording...');
+            }
+
+            function stopRecording(button) {
+                recorder && recorder.stop();
+                button.disabled = true;
+                button.previousElementSibling.disabled = false;
+                __log('Stopped recording.');
+    
+                // create WAV download link using audio data blob
+                createDownloadLink();
+    
+                recorder.clear();
+            }
+
+            function createDownloadLink() {
+                recorder && recorder.exportWAV(function(blob) {
+                    var url = URL.createObjectURL(blob);
+                    var li = document.createElement('li');
+                    var au = document.createElement('audio');
+                    var hf = document.createElement('a');
+      
+                    au.controls = true;
+                    au.src = url;
+                    hf.href = url;
+                    hf.download = new Date().toISOString() + '.wav';
+                    hf.innerHTML = hf.download;
+                    li.appendChild(au);
+                    li.appendChild(hf);
+                    recordingslist.appendChild(li);
+                });
+            }
+
+            window.onload = function init() {
+                try {
+                    // webkit shim
+                    window.AudioContext = window.AudioContext || window.webkitAudioContext;
+                    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia;
+                    window.URL = window.URL || window.webkitURL;
+      
+                    audio_context = new AudioContext;
+                    __log('Audio context set up.');
+                    __log('navigator.getUserMedia ' + (navigator.getUserMedia ? 'available.' : 'not present!'));
+                } catch (e) {
+                    alert('No web audio support in this browser!');
+                }
+    
+                navigator.getUserMedia({audio: true}, startUserMedia, function(e) {
+                    __log('No live audio input: ' + e);
+                });
+            };
+        </script>
+
+    </body>
+</html>
+
+
+

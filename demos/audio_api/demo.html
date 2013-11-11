@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <!--
+        Curso HTML5 | Enero 2013
+        autor.apellido@bbvaglobalnet.com
+    
+        Demo del API Audio de HTML5
+    
+        Fuentes originales:
+        http://www.html5rocks.com/en/tutorials/webaudio/intro/
+    -->
+
+    <head>
+        <meta charset="utf-8" />
+        <title>HTML5 Demo Courses</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <!-- Le styles -->
+        <link href="../../assets/css/bootstrap.css" rel="stylesheet" />
+        <link href="../../assets/css/bootstrap-marketing-demo.css" rel="stylesheet" />
+        <link href="../../assets/css/bootstrap-responsive.css" rel="stylesheet" />
+        <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <!-- Fav and touch icons -->
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../assets/ico/apple-touch-icon-144-precomposed.png" />
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../assets/ico/apple-touch-icon-114-precomposed.png" />
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../assets/ico/apple-touch-icon-72-precomposed.png" />
+        <link rel="apple-touch-icon-precomposed" href="../../assets/ico/apple-touch-icon-57-precomposed.png" />
+        <link rel="shortcut icon" href="../../assets/ico/favicon.png" />
+    </head>
+    <body>
+        <!-- Top menu -------------------------------------------------------- -->
+        <div class="container-narrow">
+            <div class="masthead">
+                <ul class="nav nav-pills pull-right">
+                    <li><a href="../../index.html">Home</a></li>
+                </ul>
+                <h3 class="muted">Web Audio API</h3>
+            </div>
+
+            <hr />
+            <!-- Center Logo ----------------------------------------------------- -->
+            <div class="row-fluid">
+                <div id="span6">
+                    <img src="drum_pattern.png" />
+                    </div>
+                <div id="span6">
+                    <input type="button" class="btn" onclick="RhythmSample.play();" value="Play" />
+                </div>
+            </div>
+            
+            <hr />
+            
+            <div class="row-fluid">
+                <img src="crossfade.png" />
+                <input type="button" class="btn" onclick="CrossfadeSample.toggle();" value="Play/Pause"/>
+                <p>Drums <input type="range" min="0" max="100" value="100" onchange="CrossfadeSample.crossfade(this);"/> Organ</p>
+            </div>
+            
+            <hr />
+
+            <!-- Footer ---------------------------------------------------------- -->
+            <div class="footer">
+                <p align="center"><img src="../../assets/img/beeva_logo.png" /></p>
+            </div>
+        </div>
+        <!-- /container -->
+        <!-- Le javascript
+                ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster 			-->
+        <script src="js/init.js"></script>
+        <script src="js/buffer-loader.js"></script>
+        <script>
+            var RhythmSample = {};
+            
+            RhythmSample.play = function() {
+                function playSound(buffer, time) {
+                    var source = context.createBufferSource();
+                    source.buffer = buffer;
+                    source.connect(context.destination);
+                    source.noteOn(time);
+                }
+                
+                var kick = BUFFERS.kick;
+                var snare = BUFFERS.snare;
+                var hihat = BUFFERS.hihat;
+                
+                // We'll start playing the rhythm 100 milliseconds from "now"
+                var startTime = context.currentTime + 0.100;
+                var tempo = 80; // BPM (beats per minute)
+                var eighthNoteTime = (60 / tempo) / 2;
+                
+                // Play 2 bars of the following:
+                for (var bar = 0; bar < 2; bar++) {
+                    var time = startTime + bar * 8 * eighthNoteTime;
+                    // Play the bass (kick) drum on beats 1, 5
+                    playSound(kick, time);
+                    playSound(kick, time + 4 * eighthNoteTime);
+                    
+                    // Play the snare drum on beats 3, 7
+                    playSound(snare, time + 2 * eighthNoteTime);
+                    playSound(snare, time + 6 * eighthNoteTime);
+                    
+                    // Play the hi-hat every eighthh note.
+                    for (var i = 0; i < 8; ++i) {
+                        playSound(hihat, time + i * eighthNoteTime);
+                    }
+                }
+            };
+            
+            var CrossfadeSample = {};
+
+            CrossfadeSample.play = function() {
+                // Create two sources.
+                this.ctl1 = createSource(BUFFERS.drums);
+                this.ctl2 = createSource(BUFFERS.organ);
+                // Mute the second source.
+                this.ctl1.gainNode.gain.value = 0;
+                // Start playback in a loop
+                this.ctl1.source.noteOn(0);
+                this.ctl2.source.noteOn(0);
+                // Set the initial crossfade to be just source 1.
+                this.crossfade(0);
+
+                function createSource(buffer) {
+                    var source = context.createBufferSource();
+                    var gainNode = context.createGainNode();
+                    source.buffer = buffer;
+                    // Turn on looping
+                    source.loop = true;
+                    // Connect source to gain.
+                    source.connect(gainNode);
+                    // Connect gain to destination.
+                    gainNode.connect(context.destination);
+
+                    return {
+                        source: source,
+                        gainNode: gainNode
+                    };
+                }
+            };
+
+            CrossfadeSample.stop = function() {
+                this.ctl1.source.noteOff(0);
+                this.ctl2.source.noteOff(0);
+            };
+
+            // Fades between 0 (all source 1) and 1 (all source 2)
+            CrossfadeSample.crossfade = function(element) {
+                var x = parseInt(element.value) / parseInt(element.max);
+                // Use an equal-power crossfading curve:
+                var gain1 = Math.cos(x * 0.5*Math.PI);
+                var gain2 = Math.cos((1.0 - x) * 0.5*Math.PI);
+                this.ctl1.gainNode.gain.value = gain1;
+                this.ctl2.gainNode.gain.value = gain2;
+            };
+
+            CrossfadeSample.toggle = function() {
+                this.playing ? this.stop() : this.play();
+                this.playing = !this.playing;
+            };
+            
+        </script>
+    </body>
+</html>

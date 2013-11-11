@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+    <!--
+        Curso HTML5 | Enero 2013
+        joseangel.gomez@bbvaglobalnet.com
+    
+        Demo de Canvas de HTML5
+        
+    -->
+    
+    <head>
+        <meta charset="utf-8" />
+        <title>HTML5 Demo Courses</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <!-- Le styles -->
+        <link href="../../assets/css/bootstrap.css" rel="stylesheet" />
+        <link href="../../assets/css/bootstrap-marketing-demo.css" rel="stylesheet" />
+        <link href="../../assets/css/bootstrap-responsive.css" rel="stylesheet" />
+        <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <!-- Fav and touch icons -->
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../assets/ico/apple-touch-icon-144-precomposed.png" />
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../assets/ico/apple-touch-icon-114-precomposed.png" />
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../assets/ico/apple-touch-icon-72-precomposed.png" />
+        <link rel="apple-touch-icon-precomposed" href="../../assets/ico/apple-touch-icon-57-precomposed.png" />
+        <link rel="shortcut icon" href="../../assets/ico/favicon.png" />
+        
+        
+        
+        <script>
+        //Recibe un identificador del elemento canvas y carga el canvas
+        //Devueve el contexto del canvas o FALSE si no ha podido conseguise
+        function cargaContextoCanvas(idCanvas){
+           var elemento = document.getElementById(idCanvas);
+           if(elemento && elemento.getContext){
+              var contexto = elemento.getContext('2d');
+              if(contexto){
+                 return contexto;
+              }
+           }
+           return FALSE;
+        }
+
+         window.onload = function(){
+             
+            //Primero dibujamos la parte de grosores de lineas 
+            dibujaTrazado();
+            
+            //Despues dibujamos distintos tipos de extremos de lineas
+            var ctx = cargaContextoCanvas('micanvas2');
+            if(ctx){
+
+               //Camino para la sonrisa
+               ctx.beginPath();
+               ctx.lineWidth = 20;
+               ctx.lineCap = "round";
+               ctx.strokeStyle = '#009';
+               ctx.arc(75,75,60,Math.PI,0,true);
+               ctx.stroke();
+
+               //ojo izquierdo
+               ctx.beginPath();
+               ctx.lineWidth = 10;
+               ctx.arc(35,25,10,0,Math.PI,true);
+               ctx.stroke();
+
+               //ojo derecho
+               ctx.beginPath();
+               ctx.arc(110,25,10,0,Math.PI,true);
+               ctx.stroke();
+
+               //círculo relleno para la nariz
+               ctx.beginPath();
+               ctx.arc(73,50,10,0,Math.PI*2,true);
+               ctx.fillStyle = '#009';
+               ctx.fill();
+
+            }
+         }
+
+         function dibujaTrazado(){
+            var ctx = cargaContextoCanvas('micanvas1');
+            if(ctx){
+               ctx.clearRect(0,0,ctx.canvas.width,ctx.canvas.height);
+               ctx.lineWidth = document.grosor.valorgrosor.selectedIndex+1;
+               ctx.strokeStyle = '#116';
+               ctx.beginPath();
+               ctx.moveTo(50,15);
+               ctx.lineTo(75,15);
+               ctx.lineTo(75,75);
+               ctx.lineTo(50,135);
+               ctx.lineTo(25,75);
+               ctx.lineTo(25,15);
+               ctx.closePath();
+               ctx.stroke();
+               //primer punto del camino anterior
+               ctx.fillStyle = '#ff8800';
+               ctx.fillRect(49,14,2,2);
+            }
+         }
+
+        </script>       
+        
+        
+        
+    </head>
+    <body>
+        <!-- Top menu -------------------------------------------------------- -->
+        <div class="container-narrow">
+            <div class="masthead">
+                <ul class="nav nav-pills pull-right">
+                    <li><a href="demo.html">Canvas</a></li>
+                    <li><a href="../../index.html">Home</a></li>
+                </ul>
+                <h3 class="muted">Canvas - Grosor y Extremos de Lineas</h3>
+            </div>
+
+            <hr />
+            <!-- Center Logo ----------------------------------------------------- -->
+            <div class="row-fluid">
+                <canvas id="micanvas1" width="250" height="200">
+                    Contenido que sólo verán los usuarios que no soportan canvas en su navegador. Usa una versión moderna de Firefox, Chrome, Safari, Opera... casi todos los navegadores excepto Explorer son compatibles con Canvas.
+                </canvas>
+                <form name="grosor">
+                    Selecciona un grosor: <select name="valorgrosor" onchange="dibujaTrazado()">
+                       <option value="1">1</option>
+                       <option value="2">2</option>
+                       <option value="3">3</option>
+                       <option value="4">4</option>
+                       <option value="5">5</option>
+                       <option value="6">6</option>
+                       <option value="7" selected>7</option>
+                       <option value="8">8</option>
+                       <option value="9">9</option>
+                       <option value="10">10</option>
+                    </select>
+                </form>
+                <canvas id="micanvas2" style="margin-top: 300px;" width="250" height="200">
+                    Contenido que sólo verán los usuarios que no soportan canvas en su navegador. Usa una versión moderna de Firefox, Chrome, Safari, Opera... casi todos los navegadores excepto Explorer son compatibles con Canvas.
+                </canvas>
+            </div>
+
+            <hr />
+            <!-- Footer ---------------------------------------------------------- -->
+            <div class="footer">
+                <p align="center"><img src="../../assets/img/beeva_logo.png" /></p>
+            </div>
+        </div>
+        <!-- /container -->
+        <!-- Le javascript
+                ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster 			-->
+        <script></script>
+
+    </body>
+</html>

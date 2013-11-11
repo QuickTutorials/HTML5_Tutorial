@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+    <!--
+        Curso HTML5 | Enero 2013
+        joseangel.gomez@bbvaglobalnet.com
+    
+        Demo de Canvas de HTML5
+        
+    -->
+    
+    <head>
+        <meta charset="utf-8" />
+        <title>HTML5 Demo Courses</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <!-- Le styles -->
+        <link href="../../assets/css/bootstrap.css" rel="stylesheet" />
+        <link href="../../assets/css/bootstrap-marketing-demo.css" rel="stylesheet" />
+        <link href="../../assets/css/bootstrap-responsive.css" rel="stylesheet" />
+        <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <!-- Fav and touch icons -->
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../assets/ico/apple-touch-icon-144-precomposed.png" />
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../assets/ico/apple-touch-icon-114-precomposed.png" />
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../assets/ico/apple-touch-icon-72-precomposed.png" />
+        <link rel="apple-touch-icon-precomposed" href="../../assets/ico/apple-touch-icon-57-precomposed.png" />
+        <link rel="shortcut icon" href="../../assets/ico/favicon.png" />
+        
+        
+        
+        <script>
+            //Recibe un identificador del elemento canvas y carga el canvas
+            //Devueve el contexto del canvas o FALSE si no ha podido conseguise
+            function cargaContextoCanvas(idCanvas){
+               var elemento = document.getElementById(idCanvas);
+               if(elemento && elemento.getContext){
+                  var contexto = elemento.getContext('2d');
+                  if(contexto){
+                     return contexto;
+                  }
+               }
+               return false;
+            }
+
+            window.onload = function(){
+               //Recibimos el elemento canvas
+               var ctx = cargaContextoCanvas('micanvas');
+               if(ctx){
+                  ctx.beginPath();
+                  ctx.moveTo(1,1);
+                  for (i=1;i<100;i+=5){
+                     if((i%2)!=0){
+                        ctx.lineTo(i+5,i);
+                     }else{
+                        ctx.lineTo(i,i+5);
+                     }
+                  }
+                  ctx.lineTo(1,i);
+                  ctx.closePath();
+                  ctx.stroke();
+               }
+
+
+               //otro ejemplo basado en el mismo código
+               var ctx = cargaContextoCanvas('micanvas2');
+               if(ctx){
+                  ctx.beginPath();
+                  ctx.moveTo(1,1);
+                  for (i=1;i<100;i+=5){
+                     if((i%2)!=0){
+                        ctx.lineTo(i+5,i);
+                     }else{
+                        ctx.moveTo(i,i+5);
+                     }
+                  }                
+                  ctx.stroke();
+               }
+            }
+
+        </script>       
+        
+        
+        
+    </head>
+    <body>
+        <!-- Top menu -------------------------------------------------------- -->
+        <div class="container-narrow">
+            <div class="masthead">
+                <ul class="nav nav-pills pull-right">
+                    <li><a href="demo.html">Canvas</a></li>
+                    <li><a href="../../index.html">Home</a></li>
+                </ul>
+                <h3 class="muted">Canvas - Lineas</h3>
+            </div>
+
+            <hr />
+            <!-- Center Logo ----------------------------------------------------- -->
+            <div class="row-fluid">
+                <canvas id="micanvas" width="150" height="150">
+                    Contenido que sólo verán los usuarios que no soportan canvas en su navegador. Usa una versión moderna de Firefox, Chrome, Safari, Opera... casi todos los navegadores excepto Explorer son compatibles con Canvas.
+                </canvas>
+                <canvas id="micanvas2" width="150" height="150">
+                    Contenido que sólo verán los usuarios que no soportan canvas en su navegador. Usa una versión moderna de Firefox, Chrome, Safari, Opera... casi todos los navegadores excepto Explorer son compatibles con Canvas.
+                </canvas>
+            </div>
+
+            <hr />
+            <!-- Footer ---------------------------------------------------------- -->
+            <div class="footer">
+                <p align="center"><img src="../../assets/img/beeva_logo.png" /></p>
+            </div>
+        </div>
+        <!-- /container -->
+        <!-- Le javascript
+                ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster 			-->
+        <script></script>
+
+    </body>
+</html>

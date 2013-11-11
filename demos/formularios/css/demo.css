@@ -1,0 +1,35 @@
+form p {
+  height: 25px;
+}
+form p span {
+  display: inline-block;
+  width: 140px;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+label {
+	width: 140px;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+input[type="submit"] {
+	border: 2px solid #C0C0C0;
+	background-color: #000000;
+	color: #FFFFFF;
+	font-weight: bold;
+	font-size: 12px;
+	padding: 3px 7px;
+	cursor: pointer;
+}
+
+.aviso {
+	font-size: 14px;
+	font-color: #4FABDC;
+}
+
+.aviso a, .avisoa:hover, .aviso a:visited, .aviso a:active, .aviso a:link{
+	text-decoration: none;
+	color: #8FCE39;
+}
